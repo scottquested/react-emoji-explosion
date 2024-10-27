@@ -1,0 +1,88 @@
+name: Create Release Pull Request
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  create-release:
+    name: Create Release Pull Request
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+    outputs:
+      has_changesets: ${{ steps.changesets.outputs.hasChangesets }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: pnpm setup
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
+        id: changesets
+        with:
+          commit: "ci: release"
+          title: "ci: release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  update-lock:
+    if: ${{ needs.create-release.outputs.has_changesets == 'true' }}
+    needs: create-release
+    name: Update pnpm lock file
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: "changeset-release/main"
+          # token: ${{ secrets.EXPLODE_GITHUB_PAT }}
+          fetch-depth: 0
+
+      - name: pnpm setup
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Update lock file
+        run: pnpm install --lockfile-only
+
+      - name: Commit lock file
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: pnpm.lock"
+          branch: changeset-release/main
+          # Override the default commit user and author
+          commit_user_name: github-actions[bot]
+          commit_user_email: github-actions[bot]@users.noreply.github.com
+          commit_author: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          # We only care about commiting the lock file
+          file_pattern: "pnpm-lock.yaml"

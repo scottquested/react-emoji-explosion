@@ -1,0 +1,54 @@
+name: Create tag and release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  create-tag:
+    # Only run if the PR is merged and the branch is 'changeset-release/main'
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'changeset-release/main'
+    runs-on: ubuntu-latest
+    outputs:
+      tag-version: ${{ steps.get_version.outputs.PACKAGE_VERSION }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check package.json version
+        id: get_version
+        run: |
+          PACKAGE_VERSION=$(jq -r '.version' apps/frontend/package.json)
+          echo "Package version: $PACKAGE_VERSION"
+          if [ -z "$PACKAGE_VERSION" ]; then
+            echo "Version not found in package.json"
+            exit 1
+          fi
+          echo "PACKAGE_VERSION=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create Git tag
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "${{ steps.get_version.outputs.PACKAGE_VERSION }}" -m "Release version ${{ steps.get_version.outputs.PACKAGE_VERSION }}"
+          git push origin "${{ steps.get_version.outputs.PACKAGE_VERSION }}"
+
+  create-release:
+    needs: create-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create GitHub release
+        env:
+          # Use a PAT so it triggers the next workflow (Deploy)
+          GITHUB_TOKEN: ${{ secrets.EXPLODE_GITHUB_PAT }}
+        run: |
+          echo "Creating release for tag ${{ needs.create-tag.outputs.tag-version }}"
+          gh release create "${{ needs.create-tag.outputs.tag-version }}" --generate-notes
