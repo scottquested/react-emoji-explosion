@@ -1,1 +1,1 @@
-export { default as EmojiExplosion } from "./EmojiExplosion";
+export { default as ReactEmojiExplosion } from "./components/ReactEmojiExplosion/ReactEmojiExplosion";
