@@ -1,5 +1,11 @@
 # react-emoji-explosion
 
+## 0.0.9
+
+### Patch Changes
+
+- cea0447: Update README
+
 ## 0.0.8
 
 ### Patch Changes
