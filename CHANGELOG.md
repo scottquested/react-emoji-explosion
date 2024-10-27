@@ -1,5 +1,11 @@
 # react-emoji-explosion
 
+## 0.0.5
+
+### Patch Changes
+
+- e6a61df: Add build command to publish
+
 ## 0.0.4
 
 ### Patch Changes
