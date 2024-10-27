@@ -1,4 +1,3 @@
-import type { Emoji } from "emoji-type";
 import { type MouseEvent, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import {
@@ -8,11 +7,9 @@ import {
   particles,
 } from "./utils";
 
-export type Emojis = Emoji[];
-
 export interface ReactEmojiExplosionProps {
   rootElement: HTMLElement;
-  emojis: Emojis;
+  emojis: string[];
   bounce?: boolean;
 }
 
