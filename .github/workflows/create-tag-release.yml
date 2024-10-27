@@ -23,7 +23,7 @@ jobs:
       - name: Check package.json version
         id: get_version
         run: |
-          PACKAGE_VERSION=$(jq -r '.version' apps/frontend/package.json)
+          PACKAGE_VERSION=$(jq -r '.version' package.json)
           echo "Package version: $PACKAGE_VERSION"
           if [ -z "$PACKAGE_VERSION" ]; then
             echo "Version not found in package.json"
