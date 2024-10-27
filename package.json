@@ -43,7 +43,7 @@
     "url": "https://github.com/scottquested/react-emoji-explosion/issues"
   },
   "homepage": "https://github.com/scottquested/react-emoji-explosion#readme",
-  "description": "",
+  "description": "A React component that explodes emoji",
   "peerDependencies": {
     "react": ">=18",
     "react-dom": ">=18"
@@ -78,6 +78,8 @@
     ]
   },
   "dependencies": {
-    "@changesets/cli": "^2.27.9"
+    "@changesets/cli": "^2.27.9",
+    "add": "^2.0.6",
+    "emoji-type": "^1.0.4"
   }
 }

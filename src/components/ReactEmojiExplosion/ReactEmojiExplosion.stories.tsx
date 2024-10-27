@@ -15,8 +15,7 @@ type Story = StoryObj<ReactEmojiExplosionProps>;
 export const Default: Story = {
   args: {
     rootElement: document.querySelector("#custom-root") as HTMLElement,
-    emojis: ["😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊"],
-    numberOfItems: 10,
+    emojis: ["😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊", "✌🏼"],
     bounce: false,
   },
 };

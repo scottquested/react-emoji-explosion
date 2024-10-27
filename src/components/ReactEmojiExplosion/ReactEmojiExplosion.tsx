@@ -1,3 +1,4 @@
+import type { Emoji } from "emoji-type";
 import { type MouseEvent, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import {
@@ -9,14 +10,12 @@ import {
 
 export interface ReactEmojiExplosionProps {
   rootElement: HTMLElement;
-  numberOfItems: number;
-  emojis: string[];
+  emojis: Emoji[];
   bounce?: boolean;
 }
 
 const ReactEmojiExplosion = ({
   rootElement,
-  numberOfItems,
   emojis,
   bounce = false,
 }: ReactEmojiExplosionProps) => {
@@ -30,7 +29,7 @@ const ReactEmojiExplosion = ({
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        for (let i = 0; i < numberOfItems; i++) {
+        for (let i = 0; i < emojis.length; i++) {
           particles.push(createParticle(x, y, emojis));
         }
         if (!animationId) {
