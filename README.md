@@ -4,9 +4,15 @@
 
 ## Features
 
-- Customizable number of emojis
-- Supports a variety of emojis
+- Can use strings or emojis
 - Bouncing effect
+
+### Coming soon
+
+- Customizable colors, sizes, and speeds
+- More animations and effects
+- Support for any HTML element
+- Performance optimizations for lots of items
 
 ## Installation
 
@@ -47,11 +53,11 @@ export default App;
 
 The ReactEmojiExplosion component accepts the following props:
 
-| Prop          | Type        | Description                                         | Default |
-| ------------- | ----------- | --------------------------------------------------- | ------- |
-| `rootElement` | HTMLElement | The root element where the canvas will be attached. | -       |
-| `emojis`      | string[]    | An array of emojis to use in the explosion.         | -       |
-| `bounce`      | boolean     | Whether the emojis should bounce.                   | false   |
+| Prop          | Type        | Description                                            | Default |
+| ------------- | ----------- | ------------------------------------------------------ | ------- |
+| `rootElement` | HTMLElement | The root element where the canvas will be attached.    | -       |
+| `emojis`      | string[]    | An array of emojis or strings to use in the explosion. | -       |
+| `bounce`      | boolean     | Whether the emojis should bounce.                      | false   |
 
 ## Contributing
 
