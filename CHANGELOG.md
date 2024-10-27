@@ -1,5 +1,11 @@
 # react-emoji-explosion
 
+## 0.0.7
+
+### Patch Changes
+
+- 100ea34: Update types
+
 ## 0.0.6
 
 ### Patch Changes
