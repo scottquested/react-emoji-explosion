@@ -8,9 +8,11 @@ import {
   particles,
 } from "./utils";
 
+export type Emojis = Emoji[];
+
 export interface ReactEmojiExplosionProps {
   rootElement: HTMLElement;
-  emojis: Emoji[];
+  emojis: Emojis;
   bounce?: boolean;
 }
 
