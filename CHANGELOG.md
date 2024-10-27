@@ -1,5 +1,11 @@
 # react-emoji-explosion
 
+## 0.0.6
+
+### Patch Changes
+
+- 683c5e5: Add README + Remove num of items in favour of array count
+
 ## 0.0.5
 
 ### Patch Changes
