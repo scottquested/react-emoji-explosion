@@ -25,11 +25,14 @@
     "strictNullChecks": true,
     "target": "es6",
   },
+  "typeRoots": [
+    "./dist/index.d.ts",
+    "node_modules/@types"
+  ],
   "include": [
     "src"
   ],
   "exclude": [
-    "node_modules",
     "dist",
     "**/**.stories.**"
   ]
